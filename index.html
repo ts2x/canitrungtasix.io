@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Can it run GTA VI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Figtree:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#1b0a2e;--panel:#2a1245;--ink:#fff1e6;--muted:#c9b3dc;--pink:#ff4f8b;--orange:#ffa04d;--teal:#34e0cf;--line:#4a2a6e;--bad:#ff5a5f;--warn:#ffc24d;--good:#34e0a0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#fff1e6;--panel:#ffffff;--ink:#2a1245;--muted:#6b5280;--line:#e5cfe0;--teal:#0f9d8f;--good:#14915f;--warn:#b07400;--bad:#d62c3a}}
+:root[data-theme="light"]{--bg:#fff1e6;--panel:#ffffff;--ink:#2a1245;--muted:#6b5280;--line:#e5cfe0;--teal:#0f9d8f;--good:#14915f;--warn:#b07400;--bad:#d62c3a}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Figtree,system-ui,sans-serif}
+header{position:relative;overflow:hidden;padding:48px 20px 40px;text-align:center;background:linear-gradient(#1b0a2e 0%,#5b1a57 70%,#a8325f 100%);color:#fff1e6}
+.sun{position:absolute;left:50%;bottom:-70px;width:260px;height:260px;margin-left:-130px;border-radius:50%;background:linear-gradient(#ffd36b,#ff4f8b);opacity:.9;
+-webkit-mask:repeating-linear-gradient(#000 0 14px,transparent 14px 20px) bottom/100% 55% no-repeat,linear-gradient(#000,#000) top/100% 45% no-repeat;
+mask:repeating-linear-gradient(#000 0 14px,transparent 14px 20px) bottom/100% 55% no-repeat,linear-gradient(#000,#000) top/100% 45% no-repeat}
+header h1{position:relative;margin:0;font:400 clamp(40px,9vw,88px)/1 "Bowlby One",Impact,sans-serif;letter-spacing:.5px;text-shadow:4px 4px 0 #ff4f8b}
+header p{position:relative;margin:14px auto 0;max-width:560px;color:#ffe3d0}
+main{max-width:1150px;margin:0 auto;padding:24px 16px 60px;display:grid;gap:20px;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:start}
+@media (max-width:860px){main{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+h2{margin:0 0 14px;font:800 20px Figtree,sans-serif}
+.grid{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+@media (max-width:520px){.grid{grid-template-columns:1fr}}
+label{display:block;font-weight:600;font-size:14px;color:var(--muted)}
+select{width:100%;margin-top:4px;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+select:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.full{grid-column:1/-1}
+.chk{display:flex;gap:10px;align-items:center;color:var(--ink);font-weight:400}
+.chk input{width:20px;height:20px;accent-color:var(--pink)}
+button.scan{margin-top:18px;width:100%;padding:16px;border:0;border-radius:10px;font:400 22px "Bowlby One",Impact,sans-serif;color:#1b0a2e;background:linear-gradient(90deg,var(--orange),var(--pink));cursor:pointer}
+button.scan:active{transform:translateY(2px)}
+#out{position:sticky;top:12px}
+.empty{color:var(--muted)}
+.verdict{border-radius:12px;padding:16px;margin-bottom:16px;border:2px solid var(--c);}
+.verdict b{display:block;font:400 28px/1.1 "Bowlby One",Impact,sans-serif;color:var(--c)}
+.verdict span{color:var(--muted)}
+.meter{height:12px;border-radius:6px;background:var(--bg);overflow:hidden;margin-top:12px}
+.meter i{display:block;height:100%;background:var(--c);transition:width .8s}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600}
+.bar{height:8px;border-radius:4px;background:var(--c);min-width:2px}
+ul{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:10px}
+li{padding-left:28px;position:relative;font-size:15px}
+li::before{content:attr(data-i);position:absolute;left:0;top:0;font-weight:800}
+li.g::before{color:var(--good)}li.w::before{color:var(--warn)}li.b::before{color:var(--bad)}
+small.note{display:block;margin-top:16px;color:var(--muted);font-size:13px}
+.scanning{animation:p .6s infinite alternate}@keyframes p{to{opacity:.4}}
+@media (prefers-reduced-motion:reduce){.scanning{animation:none}.meter i{transition:none}}
+</style>
+</head>
+<body>
+<header>
+<div class="sun" aria-hidden="true"></div>
+<h1>Can it run GTA VI?</h1>
+<p>Pick your parts from the lists, hit scan, and get settings, FPS estimates and upgrade advice for Leonida.</p>
+</header>
+<main>
+<section class="panel" aria-labelledby="t1">
+<h2 id="t1">Your PC</h2>
+<div class="grid">
+<label class="full">Graphics card (GPU)<select id="gpu"></select></label>
+<label class="full">Processor (CPU)<select id="cpu"></select></label>
+<label>RAM size<select id="ram"></select></label>
+<label>RAM type &amp; speed<select id="rtype"></select></label>
+<label>Game drive<select id="sto"></select></label>
+<label>Free disk space<select id="free"></select></label>
+<label>Operating system<select id="os"></select></label>
+<label>Power supply<select id="psu"></select></label>
+<label>Resolution<select id="res"></select></label>
+<label>Target FPS<select id="tgt"></select></label>
+<label class="chk"><input type="checkbox" id="up" checked> Use upscaling (DLSS / FSR / XeSS)</label>
+<label class="chk"><input type="checkbox" id="rt"> Ray tracing on</label>
+</div>
+<button class="scan" id="scan">Scan my PC</button>
+</section>
+<section class="panel" id="out" aria-live="polite" aria-labelledby="t2">
+<h2 id="t2">Results</h2>
+<p class="empty">Choose your parts and press Scan. Your verdict, per-setting FPS and bottleneck check will show up here.</p>
+</section>
+</main>
+<script>
+// name|performance index (RTX 4070 = 100)|VRAM GB
+const GPU=`#NVIDIA GeForce RTX 50
+RTX 5090|270|32
+RTX 5080|185|16
+RTX 5070 Ti|150|16
+RTX 5070|115|12
+RTX 5060 Ti 16GB|92|16
+RTX 5060 Ti 8GB|88|8
+RTX 5060|75|8
+#NVIDIA GeForce RTX 40
+RTX 4090|235|24
+RTX 4080 Super|170|16
+RTX 4080|162|16
+RTX 4070 Ti Super|140|16
+RTX 4070 Ti|128|12
+RTX 4070 Super|118|12
+RTX 4070|100|12
+RTX 4060 Ti 16GB|82|16
+RTX 4060 Ti 8GB|80|8
+RTX 4060|66|8
+#NVIDIA GeForce RTX 30
+RTX 3090 Ti|135|24
+RTX 3090|125|24
+RTX 3080 Ti|115|12
+RTX 3080 12GB|108|12
+RTX 3080 10GB|105|10
+RTX 3070 Ti|88|8
+RTX 3070|82|8
+RTX 3060 Ti|72|8
+RTX 3060 12GB|56|12
+RTX 3050 8GB|38|8
+RTX 3050 6GB|30|6
+#NVIDIA RTX 20 / GTX 16 / GTX 10
+RTX 2080 Ti|78|11
+RTX 2080 Super|70|8
+RTX 2070 Super|62|8
+RTX 2060 Super|54|8
+RTX 2060|46|6
+GTX 1660 Ti|40|6
+GTX 1660 Super|36|6
+GTX 1650 Super|30|4
+GTX 1650|24|4
+GTX 1080 Ti|52|11
+GTX 1080|42|8
+GTX 1070 Ti|38|8
+GTX 1070|34|8
+GTX 1060 6GB|26|6
+GTX 1060 3GB|22|3
+GTX 1050 Ti|18|4
+GTX 1050|13|2
+GTX 970|22|4
+#AMD Radeon RX 9000
+RX 9070 XT|150|16
+RX 9070|130|16
+RX 9060 XT 16GB|80|16
+RX 9060 XT 8GB|76|8
+#AMD Radeon RX 7000
+RX 7900 XTX|165|24
+RX 7900 XT|140|20
+RX 7900 GRE|120|16
+RX 7800 XT|108|16
+RX 7700 XT|95|12
+RX 7600 XT|68|16
+RX 7600|62|8
+#AMD Radeon RX 6000
+RX 6950 XT|135|16
+RX 6900 XT|128|16
+RX 6800 XT|115|16
+RX 6800|100|16
+RX 6750 XT|86|12
+RX 6700 XT|80|12
+RX 6650 XT|58|8
+RX 6600 XT|62|8
+RX 6600|52|8
+RX 6500 XT|30|4
+#AMD Radeon RX 5000 and older
+RX 5700 XT|60|8
+RX 5700|55|8
+RX 5600 XT|42|6
+RX 5500 XT 8GB|32|8
+RX Vega 64|44|8
+RX 590|30|8
+RX 580 8GB|24|8
+RX 570 4GB|20|4
+#Intel Arc
+Arc B580|85|12
+Arc B570|70|10
+Arc A770 16GB|78|16
+Arc A750|68|8
+Arc A580|55|8
+Arc A380|22|6
+#Integrated graphics
+Radeon 890M (Ryzen AI)|26|2
+Radeon 780M (Ryzen 7000/8000)|20|2
+Radeon 680M (Ryzen 6000)|14|2
+Radeon Vega 8|7|2
+Intel Arc Graphics (Core Ultra)|18|2
+Intel Iris Xe|10|2
+Intel UHD 770|6|1
+Intel UHD 630|4|1
+#Not listed
+Other: entry-level GPU|25|4
+Other: mid-range GPU|70|8
+Other: high-end GPU|130|16`;
+// name|performance index (Ryzen 5 7600X = 100)
+const CPU=`#Intel Core Ultra (200S)
+Core Ultra 9 285K|160
+Core Ultra 7 265K|145
+Core Ultra 5 245K|125
+#Intel 14th / 13th Gen
+Core i9-14900K|165
+Core i7-14700K|148
+Core i5-14600K|128
+Core i5-14400F|100
+Core i9-13900K|160
+Core i7-13700K|140
+Core i5-13600K|125
+Core i5-13400F|90
+Core i3-13100F|75
+#Intel 12th / 11th Gen
+Core i9-12900K|125
+Core i7-12700K|110
+Core i5-12600K|98
+Core i5-12400F|82
+Core i3-12100F|70
+Core i9-11900K|90
+Core i7-11700K|85
+Core i5-11400F|68
+#Intel 10th / 9th / 8th Gen
+Core i9-10900K|85
+Core i7-10700K|75
+Core i5-10600K|68
+Core i5-10400F|62
+Core i3-10100|55
+Core i9-9900K|75
+Core i7-9700K|70
+Core i5-9600K|58
+Core i5-9400F|55
+Core i7-8700K|65
+Core i5-8400|52
+Core i7-7700K|48
+Core i5-7600K|40
+Core i3-8100|40
+#AMD Ryzen 9000
+Ryzen 9 9950X3D|185
+Ryzen 9 9950X|160
+Ryzen 7 9800X3D|185
+Ryzen 7 9700X|125
+Ryzen 5 9600X|112
+#AMD Ryzen 7000
+Ryzen 9 7950X3D|165
+Ryzen 9 7950X|145
+Ryzen 9 7900X|130
+Ryzen 7 7800X3D|160
+Ryzen 7 7700X|118
+Ryzen 7 7700|112
+Ryzen 5 7600X|100
+Ryzen 5 7600|98
+#AMD Ryzen 5000
+Ryzen 9 5950X|125
+Ryzen 9 5900X|115
+Ryzen 7 5800X3D|130
+Ryzen 7 5800X|105
+Ryzen 7 5700X|100
+Ryzen 5 5600X|94
+Ryzen 5 5600|92
+Ryzen 5 5500|78
+#AMD Ryzen 3000 / 2000 / 1000
+Ryzen 9 3900X|95
+Ryzen 7 3700X|80
+Ryzen 5 3600|70
+Ryzen 5 3500|55
+Ryzen 3 3100|50
+Ryzen 7 2700X|62
+Ryzen 5 2600|48
+Ryzen 5 1600|40
+#Laptop / mobile
+Ryzen 9 7940HS|110
+Ryzen 7 7840HS|100
+Ryzen 7 6800H|85
+Ryzen 5 5600H|70
+Core i9-13900HX|140
+Core i7-13700H|105
+Core i7-12700H|95
+Core i5-12500H|80
+Core i7-11800H|75
+Core i7-10750H|60
+#Not listed
+Other: older dual/quad core|30
+Other: mid-range CPU|75
+Other: high-end CPU|120`;
+const RAM=`4 GB|4
+8 GB|8
+12 GB|12
+16 GB|16
+24 GB|24
+32 GB|32
+48 GB|48
+64 GB|64
+96 GB|96
+128 GB|128`;
+const RT=`DDR3-1333/1600|.85
+DDR4-2133/2400|.94
+DDR4-2666|.96
+DDR4-3200|.98
+DDR4-3600|1
+DDR4-4000+|1
+DDR5-4800|1.01
+DDR5-5600|1.02
+DDR5-6000|1.03
+DDR5-6400+|1.04
+LPDDR laptop memory|.95`;
+const STO=`HDD 5400 RPM|.35
+HDD 7200 RPM|.45
+SATA SSD|.68
+NVMe Gen3 SSD|.76
+NVMe Gen4 SSD|.8
+NVMe Gen5 SSD|.82`;
+const FREE=`Under 100 GB|0
+100 to 150 GB|1
+150 to 250 GB|2
+250 GB or more|3`;
+const OS=`Windows 11|1
+Windows 10 (64-bit)|1
+Windows 8.1 / 7|0
+Linux (Proton / SteamOS)|2
+macOS (Boot Camp / emulation)|3`;
+const PSU=`Under 400 W|350
+450 W|450
+500 W|500
+550 W|550
+600 W|600
+650 W|650
+750 W|750
+850 W|850
+1000 W|1000
+1200 W or more|1200
+I don’t know|-1`;
+const RES=`1280 x 720 (HD)|1.7|4
+1920 x 1080 (Full HD)|1|6
+2560 x 1440 (QHD)|.66|8
+3440 x 1440 (Ultrawide)|.5|9
+3840 x 2160 (4K)|.36|12`;
+const TGT=`30 FPS (playable)|30
+60 FPS (smooth)|60
+90 FPS|90
+120 FPS (competitive)|120
+144 FPS+|144`;
+const $=id=>document.getElementById(id);
+function fillGrouped(id,raw,def){const s=$(id);let g;raw.split("\n").forEach(l=>{if(l[0]==="#"){g=document.createElement("optgroup");g.label=l.slice(1);s.appendChild(g)}else{const o=document.createElement("option");const p=l.split("|");o.textContent=p[0];o.value=l;(g||s).appendChild(o)}});if(def)[...s.options].forEach(o=>{if(o.textContent===def)o.selected=true})}
+function fill(id,raw,di){const s=$(id);raw.split("\n").forEach((l,i)=>{const o=document.createElement("option");o.textContent=l.split("|")[0];o.value=l;if(i===di)o.selected=true;s.appendChild(o)})}
+fillGrouped("gpu",GPU,"RTX 3060 12GB");fillGrouped("cpu",CPU,"Ryzen 5 5600X");
+fill("ram",RAM,5);fill("rtype",RT,3);fill("sto",STO,3);fill("free",FREE,2);fill("os",OS,1);fill("psu",PSU,5);fill("res",RES,1);fill("tgt",TGT,1);
+const PRE=[{n:"Low",g:1.7,c:1.15,v:-2},{n:"Medium",g:1.3,c:1.08,v:-1},{n:"High",g:1,c:1,v:0},{n:"Ultra",g:.72,c:.95,v:2}];
+const val=id=>$(id).value.split("|");
+function calc(p,S){
+ const rt=S.rt?.6:1, up=S.up?1.4:1;
+ const gf=S.g*.7*p.g*S.rm*up*rt;
+ const cf=S.c*.9*p.c*(S.rt?.85:1);
+ let need=S.rv+p.v-(S.up?1:0)+(S.rt?1.5:0);need=Math.max(3,need);
+ const vf=S.vram>=need?1:Math.pow(Math.max(.3,S.vram/need),1.5);
+ const fps=Math.pow(Math.pow(gf,-4)+Math.pow(cf,-4),-.25)*vf*S.rf*S.sf;
+ return{fps,gf,cf,need,vf,low:fps*S.lf*(S.ram<16?.8:1)};
+}
+function col(f,t){return f>=t?"var(--good)":f>=30?"var(--warn)":"var(--bad)"}
+$("scan").onclick=()=>{
+ const out=$("out");out.innerHTML='<h2>Results</h2><p class="scanning">Scanning your build…</p>';
+ setTimeout(()=>render(),700);
+};
+function render(){
+ const g=val("gpu"),c=val("cpu"),ram=+val("ram")[1],rt=val("rtype"),st=val("sto"),fr=+val("free")[1],os=+val("os")[1],psu=+val("psu")[1],rs=val("res"),tg=+val("tgt")[1];
+ const gname=g[0],cname=c[0];
+ const rf=ram>=32?1.02:ram>=16?1:ram>=12?.85:ram>=8?.6:.4;
+ const S={g:+g[1],vram:+g[2],c:+c[1],ram,rf,sf:+rt[1],lf:+st[1],rm:+rs[1],rv:+rs[2],up:$("up").checked,rt:$("rt").checked};
+ const rows=PRE.map(p=>({p,...calc(p,S)}));
+ const best=[...rows].reverse().find(r=>r.fps>=tg);
+ const low=rows[0],mid=rows[1];
+ let cls,head,sub,score;
+ const dead=os===0||os===3||fr===0||S.g<8;
+ if(os===0){cls="var(--bad)";head="No. Your OS is too old.";sub="GTA VI will need a modern 64-bit Windows with DirectX 12. Windows 7 and 8.1 can’t run it."}
+ else if(fr===0){cls="var(--bad)";head="No. Not enough disk space.";sub="Free up space first. Plan for 150 GB or more on an SSD."}
+ else if(low.fps<24){cls="var(--bad)";head="No, it won’t run well.";sub=`Even on Low you’d get about ${Math.round(low.fps)} FPS at this resolution. A GPU upgrade is the first fix.`}
+ else if(low.fps<30){cls="var(--bad)";head="Barely, and it won’t feel good.";sub=`Expect around ${Math.round(low.fps)} FPS on Low with dips below that.`}
+ else if(!best){cls="var(--warn)";head=mid.fps>=30?"Yes, but below your FPS target.":"Yes, on Low settings.";sub=`Best you can do is about ${Math.round(PRE.map((p,i)=>rows[i]).filter(r=>r.fps>=30).slice(-1)[0].fps)} FPS on ${rows.filter(r=>r.fps>=30).slice(-1)[0].p.n}.`}
+ else if(best.p.n==="Ultra"){cls="var(--good)";head="Yes. Ultra, no problem.";sub=`About ${Math.round(best.fps)} FPS average at ${rs[0].split(" (")[0]}.`}
+ else{cls="var(--good)";head=`Yes. Run it on ${best.p.n}.`;sub=`About ${Math.round(best.fps)} FPS average at ${rs[0].split(" (")[0]}, enough for your ${tg} FPS target.`}
+ score=Math.max(0,Math.min(100,Math.round(mid.fps/(tg*1.2)*100)));
+ if(dead&&os!==0&&fr!==0&&S.g<8)score=Math.min(score,5);
+ const top=best||rows.filter(r=>r.fps>=30).slice(-1)[0]||low;
+ let h=`<h2>Results</h2><div class="verdict" style="--c:${cls}"><b>${head}</b><span>${sub}</span><div class="meter" role="img" aria-label="Readiness ${score} out of 100"><i style="width:${score}%"></i></div><small style="color:var(--muted)">Readiness score: ${score}/100 on ${gname} + ${cname}</small></div>`;
+ h+=`<table><tr><th>Preset</th><th>Avg FPS</th><th>1% low</th><th style="width:30%"></th></tr>`;
+ rows.forEach(r=>{const a=Math.round(r.fps),cc=col(r.fps,tg);h+=`<tr><td>${r.p.n}</td><td style="color:${cc};font-weight:800">${a}</td><td>${Math.round(r.low)}</td><td><div class="bar" style="--c:${cc};background:${cc};width:${Math.min(100,a/Math.max(tg*1.3,60)*100)}%"></div></td></tr>`});
+ h+=`</table><ul>`;
+ const L=(k,t)=>h+=`<li class="${k}" data-i="${k==="g"?"✔":k==="w"?"!":"✖"}">${t}</li>`;
+ // GPU/CPU bottleneck
+ const t0=rows[2];
+ if(t0.cf<t0.gf*.8)L("w",`<b>CPU bottleneck.</b> ${cname} caps you near ${Math.round(t0.cf)} FPS, so a faster GPU won’t help much. Lower crowd and traffic density, or upgrade the CPU.`);
+ else if(t0.gf<t0.cf*.8)L("w",`<b>GPU bottleneck.</b> ${gname} limits your frame rate. Lowering resolution or turning on upscaling gives the biggest gains.`);
+ else L("g","<b>Balanced build.</b> Your CPU and GPU are well matched.");
+ // VRAM
+ const nd=Math.round(t0.need*10)/10;
+ if(t0.vf<1)L("b",`<b>VRAM shortfall.</b> ${gname} has ${S.vram} GB, and High at this resolution wants about ${nd} GB. Expect texture pop-in and stutter. Drop textures to Medium.`);
+ else L("g",`<b>VRAM is fine.</b> ${S.vram} GB covers High settings (about ${nd} GB needed).`);
+ // RAM
+ if(ram<12)L("b",`<b>RAM too low.</b> ${ram} GB will cause heavy stutter in an open world this big. 16 GB is the realistic minimum.`);
+ else if(ram<16)L("w","<b>RAM is tight.</b> 12 GB works, but close background apps. 16 GB is recommended.");
+ else if(ram<32)L("g",`<b>${ram} GB RAM is enough.</b> 32 GB gives extra headroom for background apps.`);
+ else L("g",`<b>${ram} GB RAM is plenty.</b>`);
+ if(S.sf<.95)L("w",`<b>Slow memory.</b> ${rt[0]} costs some FPS. Faster RAM helps most with 1% lows.`);
+ // Storage
+ if(st[0].startsWith("HDD"))L("b","<b>Hard drive detected.</b> Open-world streaming on an HDD means long loads and hitching. Move the game to an SSD.");
+ else if(st[0].startsWith("SATA"))L("w","<b>SATA SSD works</b>, but an NVMe drive loads faster and streams more smoothly.");
+ else L("g",`<b>${st[0]} is ideal</b> for fast loads and smooth world streaming.`);
+ if(fr===1)L("w","<b>Disk space is tight.</b> Leave extra room for patches. Aim for 150 GB+ free.");
+ else if(fr>=2)L("g","<b>Enough free space</b> for the install and patches.");
+ // OS
+ if(os===1&&$("os").selectedIndex===1)L("w","<b>Windows 10 is near end of support.</b> Windows 11 is the safer choice for new games.");
+ if(os===2)L("w","<b>Linux:</b> expect Proton overhead (about 5 to 15% FPS) and possible anti-cheat or driver quirks.");
+ if(os===3)L("b","<b>macOS isn’t a good target.</b> Emulation and Boot Camp results will be far below these estimates.");
+ // PSU
+ const need=Math.round((50+S.g*1.7+40+S.c*.5+100)/50)*50;
+ if(psu>0){if(psu<need*.9)L("b",`<b>PSU risk.</b> This build wants roughly ${need} W and you have ${psu} W. Expect crashes under load.`);else if(psu<need)L("w",`<b>PSU is borderline.</b> Aim for about ${need} W.`);else L("g",`<b>PSU is fine</b> (build needs about ${need} W).`)}
+ else L("w",`<b>Check your PSU.</b> This build wants roughly ${need} W.`);
+ // Tips
+ if(S.rt&&S.g<110)L("w","<b>Ray tracing is costly</b> on this GPU. Turning it off could add around 40% FPS.");
+ if(!S.up&&top.fps<tg)L("w","<b>Turn on upscaling.</b> DLSS, FSR or XeSS can add roughly 30 to 40% FPS.");
+ const lowest=Math.round(1000/Math.max(1,top.low));
+ L("g",`<b>Frame time:</b> about ${Math.round(1000/Math.max(1,top.fps))} ms average, worst 1% around ${lowest} ms on ${top.p.n}.`);
+ h+=`</ul><small class="note">These are estimates, not benchmarks. I’m not aware of official PC requirements for GTA VI, so numbers are modelled from comparable open-world games and console-class targets. Real results will vary with drivers, cooling and patches.</small>`;
+ $("out").innerHTML=h;
+ if(innerWidth<860)$("out").scrollIntoView({behavior:"smooth"});
+}
+</script>
+</body>
+</html>
